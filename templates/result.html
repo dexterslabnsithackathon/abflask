@@ -1,0 +1,33 @@
+<html>
+<body>
+{%for x in f%}
+<br>
+<table border = "1">
+<caption>{{x['route']}}.html</caption>
+<thead>
+<tr>
+	{%for y in range(x['num'])%}
+	<td colspan="3">{{x['variant'][y]}}</td>
+	{%endfor%}
+	<td colspan="2">Time of Experiment</td>
+	<td colspan="2">Success of Experiment</td>
+	<td> End Time </td>
+</tr>
+</thead>
+<tbody>
+<tr>
+	{%for y in range(x['num'])%}
+	<td>{{x['total'][y]}}</td>
+	<td>{{x['conv'][y]}}</td>
+	<td>{% if x['conv'][y] == 0 or x['total'][y] == 0 %} 0 {%else%} {{x['conv'][y]/x['total'][y]}} {%endif%}</td>
+	{%endfor%}
+	<td>{{x['time'][0]}}</td><td>{{x['time'][1]}}</td>
+	<td>{{x['success'][0]}}</td><td>{{x['success'][1]}}{% if x['success'][0] == "url"%}.html{%endif%}</td>
+	<td>{{x['endtime']}}</td>
+</tr>
+</tbody>
+</table>
+<br>
+{%endfor%}
+</body>
+</html>

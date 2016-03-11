@@ -58,12 +58,12 @@ def success(var):
         )
         break
 
-    return render_template('success.html',var=var)
+    return render_template('success.html')
 
 @app.route('/result')
 def result():
     f = db.abtestdata.find();
-    return render_template('result.html',result=f)
+    return render_template('result.html',f=f)
 
 if __name__ == "__main__":
     app.run(debug=True)
