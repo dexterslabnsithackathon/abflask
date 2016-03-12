@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request, redirect, make_response, session, escape
 import os
 from pymongo import MongoClient
-# from pymongo import mongo
+
 app = Flask("ABTest")
 client=MongoClient('localhost',27017);
 db = client['admin']
@@ -55,13 +55,15 @@ def variantB():
     return render_template('variantB.html')
 
 @app.route('/success')
+def success():
+    return render_template('success.html')
+
 @app.route('/success/<var>')
-def success(var):
+def successv(var):
     f = db.abtestdata.find();
     var = int(var)
     for x in f:
         x['conv'][var] = x['conv'][var] + 1 
-        #create cookie
         db.abtestdata.update(
             { 'route': 'index' },
             { '$set': 
@@ -72,12 +74,16 @@ def success(var):
         )
         break
 
-    return render_template('success.html')
+    return redirect('/success')
 
 @app.route('/result')
 def result():
     f = db.abtestdata.find();
     return render_template('result.html',f=f)
+
+@app.route('/admin')
+def admin():
+    return render_template('admin.html')
 
 app.secret_key = 'super secret key'
 app.config['SESSION_TYPE'] = 'filesystem'
