@@ -10,7 +10,7 @@
   <link rel="stylesheet" href="../static/style.css" type="text/css" >
 </header>
 <body>
-	<form class="form-horizontal">
+	<form class="form-horizontal" action="/admin/submit" method="POST">
 
 
 <!-- Form Name -->
@@ -52,19 +52,7 @@
   </div>
 </div>
 
-<div class="form-group">
-  <label class="col-md-3 control-label" for="sdate">Start Date</label>  
-  <div class="col-md-2">
-  <input id="sdate" name="sdate" placeholder="Start" class="form-control input-md" required="" type="date">
-  </div>
-
-  <label class="col-md-1 control-label" for="stime">Start Time</label>  
-  <div class="col-md-2">
-  <input id="stime" name="stime" placeholder="Start" class="form-control input-md" required="" type="time">
-  </div>
-</div>
-
-<div class="form-group">
+<!-- <div class="form-group">
   <label class="col-md-3 control-label" for="edate">End Date</label>  
   <div class="col-md-2">
   <input id="edate" name="edate" placeholder="End" class="form-control input-md" required="" type="date">
@@ -74,7 +62,7 @@
   <div class="col-md-2">
   <input id="etime" name="etime" placeholder="End" class="form-control input-md" required="" type="time">
   </div>
-</div>
+</div> -->
 
 <div class="form-group">
 <div class="col-md-3"></div>
@@ -85,6 +73,7 @@
 
 </fieldset>
 </form>
+{{form}}
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 </body>
 </html>

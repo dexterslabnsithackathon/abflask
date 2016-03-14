@@ -1,6 +1,15 @@
 from flask import Flask, render_template, request, redirect, make_response, session, escape
-import os
+from datetime import datetime
+# from flask.ext.wtf import Form
+# from flask_wtforms import Form, BooleanField, TextField, PasswordField, validators
 from pymongo import MongoClient
+
+# class RegistrationForm(Form):
+#     currurl = TextField('Current Url', [validators.Length(min=4)])
+#     tarurl = TextField('Target Url', [validators.Length(min=4)])
+#     novariants = IntegerField('No.of variants', [validators.Required()])
+#     namevariant = TextField('Enter Variant',[validators.Required()])
+#     accept_tos = BooleanField('I accept the TOS', [validators.Required()])
 
 app = Flask("ABTest")
 client=MongoClient('localhost',27017);
@@ -20,12 +29,11 @@ def index():
                     { 'route': 'index' },
                     { '$set': 
                         {
-                            'flag':flag,
                             'total':x['total']
                         }
                     }
                 )
-                return render_template(x['variant'][x['flag']]+'.html')
+                return render_template(x['variant'][flag]+'.html',c=flag)
             else:    
             # new user
                 flag=x['flag']
@@ -41,7 +49,7 @@ def index():
                         }
                     }
                 )
-                return render_template(x['variant'][x['flag']]+'.html')
+                return render_template(x['variant'][x['flag']]+'.html',c=flag)
         break
     # return "How did I get here? 404"
     return "Old Index Page without Variants!"
@@ -83,6 +91,38 @@ def result():
 
 @app.route('/admin')
 def admin():
+    form = "Nothing Here!"
+    return render_template('admin.html',form=form)    
+
+@app.route('/admin/submit' , methods=['GET', 'POST'])
+def adminsub():
+    tarurl = request.form['textinput']
+    sucurl = request.form['textinput1']
+    vara = request.form['var1']
+    varb = request.form['var2']
+    variant = [vara,varb]
+    total = [0,0]
+    conv= [0,0]
+    success = ["url",sucurl]
+    time = [2,6]
+    endtime=datetime.now()
+    flag=0
+
+    result = db.abtestdata.insert_one(
+    {
+        "variant": variant,
+        "route": tarurl,
+        "success": success,
+        "total": total,
+        "conv": conv,
+        "time": time,
+        "endtime": endtime,
+        "flag": flag,
+        "num": 2,
+        "deleted": 0
+    }
+)
+
     return render_template('admin.html')
 
 app.secret_key = 'super secret key'
