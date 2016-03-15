@@ -1,0 +1,4 @@
+variantA
+Total: 0	Converted: 0	Convert Percentage: 0
+variantB
+Total: 4	Converted: 2	Convert Percentage: 0.5
